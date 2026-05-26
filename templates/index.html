@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Among Us – AI Simulator</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════ MAIN MENU -->
+<div id="menu-screen" class="screen active">
+  <div class="menu-bg-stars"></div>
+  <div class="menu-container">
+    <div class="menu-logo">
+      <div class="logo-title">AMONG US</div>
+      <div class="logo-sub">AI SIMULATOR</div>
+    </div>
+
+    <div class="menu-card">
+      <h2 class="section-title">Game Settings</h2>
+
+      <div class="setting-row">
+        <label>Players</label>
+        <div class="stepper">
+          <button onclick="adjustSetting('players',-1)">−</button>
+          <span id="val-players">10</span>
+          <button onclick="adjustSetting('players',+1)">+</button>
+        </div>
+      </div>
+
+      <div class="setting-row">
+        <label>Impostors</label>
+        <div class="stepper">
+          <button onclick="adjustSetting('impostors',-1)">−</button>
+          <span id="val-impostors">2</span>
+          <button onclick="adjustSetting('impostors',+1)">+</button>
+        </div>
+      </div>
+
+      <div class="setting-row">
+        <label>Speed</label>
+        <div class="speed-select">
+          <button id="spd-slow"   class="speed-btn"          onclick="setSpeed('slow')">Slow</button>
+          <button id="spd-normal" class="speed-btn selected"  onclick="setSpeed('normal')">Normal</button>
+          <button id="spd-fast"   class="speed-btn"          onclick="setSpeed('fast')">Fast</button>
+        </div>
+      </div>
+
+      <button class="btn-start" onclick="startGame()">▶ START GAME</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ GAME SCREEN -->
+<div id="game-screen" class="screen">
+
+  <!-- Top bar -->
+  <div id="topbar">
+    <div id="topbar-left">
+      <span class="map-name">THE SKELD</span>
+      <span id="tick-counter">Tick 0</span>
+    </div>
+    <div id="task-bar-wrap">
+      <span class="tb-label">TASKS</span>
+      <div id="task-bar-bg">
+        <div id="task-bar-fill"></div>
+      </div>
+      <span id="task-pct">0%</span>
+    </div>
+    <div id="topbar-right">
+      <div id="sabotage-alert" class="hidden"></div>
+      <button class="btn-menu" onclick="goToMenu()">☰ Menu</button>
+    </div>
+  </div>
+
+  <!-- Main content: map + side panel -->
+  <div id="game-body">
+
+    <!-- Map canvas -->
+    <div id="map-wrap">
+      <canvas id="map-canvas"></canvas>
+
+      <!-- Meeting overlay -->
+      <div id="meeting-overlay" class="hidden">
+        <div id="meeting-box">
+          <div id="meeting-title">EMERGENCY MEETING</div>
+          <div id="meeting-sub"></div>
+          <div id="meeting-timer-wrap">
+            <div id="meeting-timer-bar-bg"><div id="meeting-timer-bar"></div></div>
+            <span id="meeting-timer-txt"></span>
+          </div>
+          <div id="meeting-players"></div>
+        </div>
+      </div>
+
+      <!-- Game over overlay -->
+      <div id="gameover-overlay" class="hidden">
+        <div id="gameover-box">
+          <div id="gameover-title"></div>
+          <div id="gameover-sub"></div>
+          <div id="gameover-players"></div>
+          <button class="btn-start" onclick="goToMenu()">↩ Play Again</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Side panel -->
+    <div id="side-panel">
+      <div id="player-list-header">PLAYERS</div>
+      <div id="player-list"></div>
+
+      <div id="log-header">EVENT LOG</div>
+      <div id="event-log"></div>
+    </div>
+
+  </div>
+</div>
+
+<script src="/static/js/game.js"></script>
+</body>
+</html>
